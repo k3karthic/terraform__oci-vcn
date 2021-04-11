@@ -8,3 +8,8 @@ function decrypt {
 }
 
 decrypt "india.tfvars"
+
+FILES=$(ls terraform.tfstate* | grep -v \.gpg)
+for f in $FILES; do
+    decrypt $f
+done

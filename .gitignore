@@ -1,4 +1,5 @@
 .terraform
 tf.plan
 india.tfvars
-terraform.tfstate*
+terraform.tfstate
+terraform.tfstate.backup
