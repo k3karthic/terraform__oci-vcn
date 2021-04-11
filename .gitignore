@@ -1,0 +1,4 @@
+.terraform
+tf.plan
+india.tfvars
+terraform.tfstate*
