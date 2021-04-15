@@ -1,5 +1,9 @@
 variable "compartment" {}
 
+variable "vcn_cidr" {}
+variable "public1_cidr" {}
+variable "private1_cidr" {}
+
 provider "oci" {}
 
 resource "oci_core_vcn" "main" {
@@ -7,7 +11,7 @@ resource "oci_core_vcn" "main" {
 
   dns_label = "main"
   cidr_blocks = [
-    "192.168.0.0/16"
+    var.vcn_cidr
   ]
 }
 
@@ -18,14 +22,14 @@ resource "oci_core_security_list" "private" {
   ingress_security_rules {
     stateless   = true
     protocol    = "all"
-    source      = "192.168.0.0/16"
+    source      = var.vcn_cidr
     source_type = "CIDR_BLOCK"
   }
 
   egress_security_rules {
     stateless        = true
     protocol         = "all"
-    destination      = "192.168.0.0/16"
+    destination      = var.vcn_cidr
     destination_type = "CIDR_BLOCK"
   }
 
@@ -38,7 +42,7 @@ resource "oci_core_subnet" "private" {
   compartment_id = var.compartment
   vcn_id         = oci_core_vcn.main.id
 
-  cidr_block                 = "192.168.254.0/24"
+  cidr_block                 = var.private1_cidr
   prohibit_public_ip_on_vnic = true
 
   security_list_ids = [oci_core_security_list.private.id]
@@ -89,7 +93,7 @@ resource "oci_core_subnet" "public" {
   compartment_id = var.compartment
   vcn_id         = oci_core_vcn.main.id
 
-  cidr_block = "192.168.1.0/24"
+  cidr_block = var.public1_cidr
   dns_label  = "subnet1"
 
   security_list_ids = [oci_core_security_list.public.id]
