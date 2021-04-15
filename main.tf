@@ -1,10 +1,26 @@
+/*
+ * Variables
+ */
+
 variable "compartment" {}
 
 variable "vcn_cidr" {}
 variable "public1_cidr" {}
 variable "private1_cidr" {}
 
+/*
+ * Providers
+ */
+
 provider "oci" {}
+
+/*
+ * Configuration
+ */
+
+//
+// Network
+//
 
 resource "oci_core_vcn" "main" {
   compartment_id = var.compartment
@@ -15,27 +31,19 @@ resource "oci_core_vcn" "main" {
   ]
 }
 
-resource "oci_core_security_list" "private" {
+//
+// Subnets
+//
+
+resource "oci_core_subnet" "public" {
   compartment_id = var.compartment
   vcn_id         = oci_core_vcn.main.id
 
-  ingress_security_rules {
-    stateless   = true
-    protocol    = "all"
-    source      = var.vcn_cidr
-    source_type = "CIDR_BLOCK"
-  }
+  cidr_block = var.public1_cidr
+  dns_label  = "subnet1"
 
-  egress_security_rules {
-    stateless        = true
-    protocol         = "all"
-    destination      = var.vcn_cidr
-    destination_type = "CIDR_BLOCK"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  security_list_ids = [oci_core_security_list.public.id]
+  route_table_id    = oci_core_route_table.public.id
 }
 
 resource "oci_core_subnet" "private" {
@@ -48,12 +56,20 @@ resource "oci_core_subnet" "private" {
   security_list_ids = [oci_core_security_list.private.id]
 }
 
+//
+// Gateways
+//
+
 resource "oci_core_internet_gateway" "igw" {
   compartment_id = var.compartment
   vcn_id         = oci_core_vcn.main.id
 
   enabled = true
 }
+
+//
+// Route Tables
+//
 
 resource "oci_core_route_table" "public" {
   compartment_id = var.compartment
@@ -65,6 +81,10 @@ resource "oci_core_route_table" "public" {
     destination_type  = "CIDR_BLOCK"
   }
 }
+
+//
+// Security Lists
+//
 
 resource "oci_core_security_list" "public" {
   compartment_id = var.compartment
@@ -89,13 +109,25 @@ resource "oci_core_security_list" "public" {
   }
 }
 
-resource "oci_core_subnet" "public" {
+resource "oci_core_security_list" "private" {
   compartment_id = var.compartment
   vcn_id         = oci_core_vcn.main.id
 
-  cidr_block = var.public1_cidr
-  dns_label  = "subnet1"
+  ingress_security_rules {
+    stateless   = true
+    protocol    = "all"
+    source      = var.vcn_cidr
+    source_type = "CIDR_BLOCK"
+  }
 
-  security_list_ids = [oci_core_security_list.public.id]
-  route_table_id    = oci_core_route_table.public.id
+  egress_security_rules {
+    stateless        = true
+    protocol         = "all"
+    destination      = var.vcn_cidr
+    destination_type = "CIDR_BLOCK"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
