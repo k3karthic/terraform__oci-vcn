@@ -1,5 +1,5 @@
 compartment = "ocid1.tenancy.oc1..XXX"
 
-vcn_cidr = "192.168.0.0/16"
-public1_cidr = "192.168.1.0/24"
+vcn_cidr      = "192.168.0.0/16"
+public1_cidr  = "192.168.1.0/24"
 private1_cidr = "192.168.254.0/24"
