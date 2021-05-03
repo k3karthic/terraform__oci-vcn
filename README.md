@@ -1,7 +1,8 @@
-# Terraform - Create a Virtual Cloud Network in the Oracle Cloud
-Create a Virtual Cloud Network (VCN) in the Oracle Cloud, which will serve as the default VCN for all future deployments.
+# Terraform - Create a Virtual Cloud Network in Oracle Cloud
 
-Terraform script for deploying a server in the [Oracle Cloud Always Free](https://www.oracle.com/cloud/free/#always-free) tier can be found at [https://github.com/k3karthic/terraform__oci-instance-1](https://github.com/k3karthic/terraform__oci-instance-1).
+Create a Virtual Cloud Network (VCN) in Oracle Cloud; it will serve as the default VCN for all deployments.
+
+Terraform script for deploying a server under the [Oracle Cloud Always Free](https://www.oracle.com/cloud/free/#always-free) tier can be found at [https://github.com/k3karthic/terraform__oci-instance-1](https://github.com/k3karthic/terraform__oci-instance-1).
 
 ## Input Variables
 
