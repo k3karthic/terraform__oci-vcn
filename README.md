@@ -1,11 +1,11 @@
-# Terraform - Create a Virtual Cloud Network in Oracle Cloud
+# Terraform — Create a Virtual Cloud Network in Oracle Cloud
 
 Create a Virtual Cloud Network (VCN) in Oracle Cloud.
 
 The Terraform script below deploys a server under the [Oracle Cloud Always Free](https://www.oracle.com/cloud/free/#always-free) tier,
 * terraform__oci-instance-1
-	* GitHub: [github.com/k3karthic/terraform__oci-instance-1](https://github.com/k3karthic/terraform__oci-instance-1).
-	* Codeberg: [codeberg.org/k3karthic/terraform__oci-instance-1](https://codeberg.org/k3karthic/terraform__oci-instance-1).
+	* GitHub: [github.com/k3karthic/terraform__oci-instance-1](https://github.com/k3karthic/terraform__oci-instance-1)
+	* Codeberg: [codeberg.org/k3karthic/terraform__oci-instance-1](https://codeberg.org/k3karthic/terraform__oci-instance-1)
 
 ## Code Mirrors
 
