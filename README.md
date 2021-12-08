@@ -2,7 +2,7 @@
 
 Create a Virtual Cloud Network (VCN) in Oracle Cloud.
 
-You can run a server for free by using the [Oracle Cloud Always Free](https://www.oracle.com/cloud/free/#always-free) tier. Deploy an instance using either of the Terraform scripts below,
+You can run two servers for free by using the [Oracle Cloud Always Free](https://www.oracle.com/cloud/free/#always-free) tier. Deploy an instance using either of the Terraform scripts below,
 * terraform__oci-instance-1
     * GitHub: [github.com/k3karthic/terraform__oci-instance-1](https://github.com/k3karthic/terraform__oci-instance-1)
     * Codeberg: [codeberg.org/k3karthic/terraform__oci-instance-1](https://codeberg.org/k3karthic/terraform__oci-instance-1)
@@ -17,10 +17,15 @@ You can run a server for free by using the [Oracle Cloud Always Free](https://ww
 
 ## Configuration
 
-Create a file to store the [Terraform input variables](https://www.terraform.io/docs/language/values/variables.html). Use `india.tfvars.sample` as a reference. Keep `india.tfvars` as the filename or change the name in the following files,
-
+**Step 1:** Create a file to store the [Terraform input variables](https://www.terraform.io/docs/language/values/variables.html). Use `india.tfvars.sample` as a reference. Keep `india.tfvars` as the filename or change the name in the following files,
 1. `.gitignore`
 1. `bin/plan.sh`
+
+**Step 3:** Set `vcn_cidr`, `public1_cidr` and `private1_cidr` as desired.
+
+**Step 3:** Set `compartment` to the desired value. List of compartments in your Oracle Cloud account are at [cloud.oracle.com/identity/compartments](https://cloud.oracle.com/identity/compartments).
+
+![compartment list screenshot](resources/compartment.png)
 
 ## Authentication
 
@@ -49,6 +54,18 @@ $ ./bin/view.sh
 ```
 $ ./bin/apply.sh
 ```
+
+**Step 4:** Use the following command to display the public subnet,
+```
+$ terraform show oci_core_subnet.public
+```
+![terraform public subnet](resources/public_subnet.png)
+
+**Step 5:** Use the following command to display the private subnet,
+```
+$ terraform show oci_core_subnet.private
+```
+![terraform private subnet](resources/private_subnet.png)
 
 ## Encryption
 
